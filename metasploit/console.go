@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 // Console
 
@@ -97,7 +97,7 @@ type ConsoleTabsRes struct {
 }
 
 // Console
-func (msf *Metasploit) ConsoleCreate() (ConsoleCreateRes, error) {
+func (msf *Client) ConsoleCreate() (ConsoleCreateRes, error) {
 	ctx := &ConsoleCreateReq{
 		Method: "console.create",
 		Token:  msf.token,
@@ -109,7 +109,7 @@ func (msf *Metasploit) ConsoleCreate() (ConsoleCreateRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleDestroy(consoleid string) (ConsoleDestroyRes, error) {
+func (msf *Client) ConsoleDestroy(consoleid string) (ConsoleDestroyRes, error) {
 	ctx := &ConsoleDestroyReq{
 		Method:    "console.destroy",
 		Token:     msf.token,
@@ -122,7 +122,7 @@ func (msf *Metasploit) ConsoleDestroy(consoleid string) (ConsoleDestroyRes, erro
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleList() (ConsoleListRes, error) {
+func (msf *Client) ConsoleList() (ConsoleListRes, error) {
 	ctx := &ConsoleListReq{
 		Method: "console.list",
 		Token:  msf.token,
@@ -134,7 +134,7 @@ func (msf *Metasploit) ConsoleList() (ConsoleListRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleWrite(consoleId, command string) (ConsoleWriteRes, error) {
+func (msf *Client) ConsoleWrite(consoleId, command string) (ConsoleWriteRes, error) {
 	ctx := &ConsoleWriteReq{
 		Method:    "console.write",
 		Token:     msf.token,
@@ -148,7 +148,7 @@ func (msf *Metasploit) ConsoleWrite(consoleId, command string) (ConsoleWriteRes,
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleRead(consoleId string) (ConsoleReadRes, error) {
+func (msf *Client) ConsoleRead(consoleId string) (ConsoleReadRes, error) {
 	ctx := &ConsoleReadReq{
 		Method:    "console.read",
 		Token:     msf.token,
@@ -161,7 +161,7 @@ func (msf *Metasploit) ConsoleRead(consoleId string) (ConsoleReadRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleSessionDetch(consoleId string) (ConsoleSessionDetachRes, error) {
+func (msf *Client) ConsoleSessionDetch(consoleId string) (ConsoleSessionDetachRes, error) {
 	ctx := &ConsoleSessionDetachReq{
 		Method:    "console.session_detach",
 		Token:     msf.token,
@@ -174,7 +174,7 @@ func (msf *Metasploit) ConsoleSessionDetch(consoleId string) (ConsoleSessionDeta
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleSessionKill(consoleId string) (ConsoleSessionKillRes, error) {
+func (msf *Client) ConsoleSessionKill(consoleId string) (ConsoleSessionKillRes, error) {
 	ctx := &ConsoleSessionKillReq{
 		Method:    "console.session_kill",
 		Token:     msf.token,
@@ -187,7 +187,7 @@ func (msf *Metasploit) ConsoleSessionKill(consoleId string) (ConsoleSessionKillR
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleTabs(consoleId, inputLine string) (ConsoleTabsRes, error) {
+func (msf *Client) ConsoleTabs(consoleId, inputLine string) (ConsoleTabsRes, error) {
 	ctx := &ConsoleTabsReq{
 		Method:    "console.tabs",
 		Token:     msf.token,

@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 // Modules
 
@@ -159,7 +159,7 @@ type ModuleExecuteRes struct {
 	JobId uint32 `msgpack:"job_id"`
 }
 
-func (msf *Metasploit) ModuleExploits() (ModuleExploitsRes, error) {
+func (msf *Client) ModuleExploits() (ModuleExploitsRes, error) {
 	ctx := &ModuleExploitsReq{
 		Method: "module.exploits",
 		Token:  msf.token,
@@ -171,7 +171,7 @@ func (msf *Metasploit) ModuleExploits() (ModuleExploitsRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleAuxiliary() (ModuleAuxiliaryRes, error) {
+func (msf *Client) ModuleAuxiliary() (ModuleAuxiliaryRes, error) {
 	ctx := &ModuleAuxiliaryReq{
 		Method: "module.auxiliary",
 		Token:  msf.token,
@@ -183,7 +183,7 @@ func (msf *Metasploit) ModuleAuxiliary() (ModuleAuxiliaryRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModulePost() (ModulePostRes, error) {
+func (msf *Client) ModulePost() (ModulePostRes, error) {
 	ctx := &ModulePostReq{
 		Method: "module.post",
 		Token:  msf.token,
@@ -195,7 +195,7 @@ func (msf *Metasploit) ModulePost() (ModulePostRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModulePayloads() (ModulePayloadsRes, error) {
+func (msf *Client) ModulePayloads() (ModulePayloadsRes, error) {
 	ctx := &ModulePayloadsReq{
 		Method: "module.payloads",
 		Token:  msf.token,
@@ -207,7 +207,7 @@ func (msf *Metasploit) ModulePayloads() (ModulePayloadsRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleEncoders() (ModuleEncodersRes, error) {
+func (msf *Client) ModuleEncoders() (ModuleEncodersRes, error) {
 	ctx := &ModuleEncodersReq{
 		Method: "module.encoders",
 		Token:  msf.token,
@@ -219,7 +219,7 @@ func (msf *Metasploit) ModuleEncoders() (ModuleEncodersRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleNops() (ModuleNopsRes, error) {
+func (msf *Client) ModuleNops() (ModuleNopsRes, error) {
 	ctx := &ModuleNopsReq{
 		Method: "module.nops",
 		Token:  msf.token,
@@ -231,7 +231,7 @@ func (msf *Metasploit) ModuleNops() (ModuleNopsRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleInfo(ModuleType, ModuleName string) (ModuleInfoRes, error) {
+func (msf *Client) ModuleInfo(ModuleType, ModuleName string) (ModuleInfoRes, error) {
 	ctx := &ModuleInfoReq{
 		Method:     "module.info",
 		Token:      msf.token,
@@ -245,7 +245,7 @@ func (msf *Metasploit) ModuleInfo(ModuleType, ModuleName string) (ModuleInfoRes,
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleOptions(ModuleType, ModuleName string) (ModuleOptionsRes, error) {
+func (msf *Client) ModuleOptions(ModuleType, ModuleName string) (ModuleOptionsRes, error) {
 	ctx := &ModuleOptionsReq{
 		Method:     "module.options",
 		Token:      msf.token,
@@ -259,7 +259,7 @@ func (msf *Metasploit) ModuleOptions(ModuleType, ModuleName string) (ModuleOptio
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleCompatiblePayloads(ModuleName string) (ModuleCompatiblePayloadsRes, error) {
+func (msf *Client) ModuleCompatiblePayloads(ModuleName string) (ModuleCompatiblePayloadsRes, error) {
 	ctx := &ModuleCompatiblePayloadsReq{
 		Method:     "module.compatible_payloads",
 		Token:      msf.token,
@@ -272,7 +272,7 @@ func (msf *Metasploit) ModuleCompatiblePayloads(ModuleName string) (ModuleCompat
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleTargetCompatiblePayloads(ModuleName string, targetNumber uint32) (ModuleTargetCompatiblePayloadsRes, error) {
+func (msf *Client) ModuleTargetCompatiblePayloads(ModuleName string, targetNumber uint32) (ModuleTargetCompatiblePayloadsRes, error) {
 	ctx := &ModuleTargetCompatiblePayloadsReq{
 		Method:     "module.target_compatible_payloads",
 		Token:      msf.token,
@@ -286,7 +286,7 @@ func (msf *Metasploit) ModuleTargetCompatiblePayloads(ModuleName string, targetN
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleCompatibleSessions(ModuleName string) (ModuleCompatibleSessionsRes, error) {
+func (msf *Client) ModuleCompatibleSessions(ModuleName string) (ModuleCompatibleSessionsRes, error) {
 	ctx := &ModuleCompatibleSessionsReq{
 		Method:     "module.compatible_sessions",
 		Token:      msf.token,
@@ -299,7 +299,7 @@ func (msf *Metasploit) ModuleCompatibleSessions(ModuleName string) (ModuleCompat
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleEncode(data, encoderModule string, ModuleOptions map[string]string) (ModuleEncodeRes, error) {
+func (msf *Client) ModuleEncode(data, encoderModule string, ModuleOptions map[string]string) (ModuleEncodeRes, error) {
 	ctx := &ModuleEncodeReq{
 		Method:        "module.encode",
 		Token:         msf.token,
@@ -314,7 +314,7 @@ func (msf *Metasploit) ModuleEncode(data, encoderModule string, ModuleOptions ma
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleExecute(ModuleType, ModuleName string, ModuleOptions map[string]string) (ModuleExecuteRes, error) {
+func (msf *Client) ModuleExecute(ModuleType, ModuleName string, ModuleOptions map[string]string) (ModuleExecuteRes, error) {
 	ctx := &ModuleExecuteReq{
 		Method:     "module.execute",
 		Token:      msf.token,
@@ -329,7 +329,7 @@ func (msf *Metasploit) ModuleExecute(ModuleType, ModuleName string, ModuleOption
 	return res, nil
 }
 
-func (msf *Metasploit) GetModuleRequires(ModuleType, ModuleName string) ([]string, error) {
+func (msf *Client) GetModuleRequires(ModuleType, ModuleName string) ([]string, error) {
 	var returnValues []string
 
 	options, err := msf.ModuleOptions(ModuleType, ModuleName)

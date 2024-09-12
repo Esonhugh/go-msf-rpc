@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 // Jobs
 
@@ -38,7 +38,7 @@ type JobStopRes struct {
 
 // Jobs
 
-func (msf *Metasploit) JobList() (JobListRes, error) {
+func (msf *Client) JobList() (JobListRes, error) {
 	ctx := &JobListReq{
 		Method: "job.list",
 		Token:  msf.token,
@@ -50,7 +50,7 @@ func (msf *Metasploit) JobList() (JobListRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) JobInfo(jobId string) (JobInfoRes, error) {
+func (msf *Client) JobInfo(jobId string) (JobInfoRes, error) {
 	ctx := &JobInfoReq{
 		Method: "job.info",
 		Token:  msf.token,
@@ -63,7 +63,7 @@ func (msf *Metasploit) JobInfo(jobId string) (JobInfoRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) JobStop(jobId string) (JobStopRes, error) {
+func (msf *Client) JobStop(jobId string) (JobStopRes, error) {
 	ctx := &JobStopReq{
 		Method: "job.stop",
 		Token:  msf.token,

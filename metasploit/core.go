@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 // Core
 type CoreAddModulePathReq struct {
@@ -126,7 +126,7 @@ type CoreStopRes struct {
 	Result string `msgpack:"result"`
 }
 
-func (msf *Metasploit) CoreAddModulePath(path string) (CoreAddModulePathRes, error) {
+func (msf *Client) CoreAddModulePath(path string) (CoreAddModulePathRes, error) {
 	ctx := &CoreAddModulePathReq{
 		Method: "core.add_module_path",
 		Token:  msf.token,
@@ -140,7 +140,7 @@ func (msf *Metasploit) CoreAddModulePath(path string) (CoreAddModulePathRes, err
 	return res, nil
 }
 
-func (msf *Metasploit) CoreModuleStats() (CoreModuleStatsRes, error) {
+func (msf *Client) CoreModuleStats() (CoreModuleStatsRes, error) {
 	ctx := &CoreModuleStatsReq{
 		Method: "core.module_stats",
 		Token:  msf.token,
@@ -153,7 +153,7 @@ func (msf *Metasploit) CoreModuleStats() (CoreModuleStatsRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreReloadModules() (CoreReloadModulesRes, error) {
+func (msf *Client) CoreReloadModules() (CoreReloadModulesRes, error) {
 	ctx := &CoreReloadModulesReq{
 		Method: "core.reload_modules",
 		Token:  msf.token,
@@ -166,7 +166,7 @@ func (msf *Metasploit) CoreReloadModules() (CoreReloadModulesRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreSave() (CoreSaveRes, error) {
+func (msf *Client) CoreSave() (CoreSaveRes, error) {
 	ctx := &CoreSaveReq{
 		Method: "core.save",
 		Token:  msf.token,
@@ -179,7 +179,7 @@ func (msf *Metasploit) CoreSave() (CoreSaveRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreSetg(optionName, optionValue string) (CoreSetgRes, error) {
+func (msf *Client) CoreSetg(optionName, optionValue string) (CoreSetgRes, error) {
 	ctx := &CoreSetgReq{
 		Method:      "core.setg",
 		Token:       msf.token,
@@ -194,7 +194,7 @@ func (msf *Metasploit) CoreSetg(optionName, optionValue string) (CoreSetgRes, er
 	return res, nil
 }
 
-func (msf *Metasploit) CoreUnSetg(optionName string) (CoreUnSetgRes, error) {
+func (msf *Client) CoreUnSetg(optionName string) (CoreUnSetgRes, error) {
 	ctx := &CoreUnSetgReq{
 		Method:     "core.unsetg",
 		Token:      msf.token,
@@ -208,7 +208,7 @@ func (msf *Metasploit) CoreUnSetg(optionName string) (CoreUnSetgRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreThreadList() (CoreThreadListRes, error) {
+func (msf *Client) CoreThreadList() (CoreThreadListRes, error) {
 	ctx := &CoreThreadListReq{
 		Method: "core.thread_list",
 		Token:  msf.token,
@@ -221,7 +221,7 @@ func (msf *Metasploit) CoreThreadList() (CoreThreadListRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreThreadKill(threadId string) (CoreThreadKillRes, error) {
+func (msf *Client) CoreThreadKill(threadId string) (CoreThreadKillRes, error) {
 	ctx := &CoreThreadKillReq{
 		Method:   "core.thread_kill",
 		Token:    msf.token,
@@ -235,7 +235,7 @@ func (msf *Metasploit) CoreThreadKill(threadId string) (CoreThreadKillRes, error
 	return res, nil
 }
 
-func (msf *Metasploit) CoreVersion() (CoreVersionRes, error) {
+func (msf *Client) CoreVersion() (CoreVersionRes, error) {
 	ctx := &CoreVersionReq{
 		Method: "core.version",
 		Token:  msf.token,
@@ -247,7 +247,7 @@ func (msf *Metasploit) CoreVersion() (CoreVersionRes, error) {
 	return res, nil
 }
 
-func (msf *Metasploit) CoreStop() (CoreStopRes, error) {
+func (msf *Client) CoreStop() (CoreStopRes, error) {
 	ctx := &CoreStopReq{
 		Method: "core.stop",
 		Token:  msf.token,

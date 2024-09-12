@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 import "fmt"
 
@@ -29,7 +29,7 @@ type LogoutRes struct {
 	Result string `msgpack:"result"`
 }
 
-func (msf *Metasploit) Login() error {
+func (msf *Client) Login() error {
 	ctx := &LoginReq{
 		Method:   "auth.login",
 		Username: msf.user,
@@ -45,7 +45,7 @@ func (msf *Metasploit) Login() error {
 	return nil
 }
 
-func (msf *Metasploit) Logout() error {
+func (msf *Client) Logout() error {
 	ctx := &LogoutReq{
 		Method:      "auth.logout",
 		Token:       msf.token,

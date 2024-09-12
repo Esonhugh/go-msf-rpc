@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 	"time"
-
-	"github.com/fpr1m3/go-msf-rpc/rpc"
 )
 
 func checkErr(reason string, err error) bool {
@@ -34,7 +32,7 @@ func main() {
 		}
 	}
 
-	msf, err := rpc.New(host, user, pass)
+	msf, err := metasploit.New(host, user, pass)
 	if err != nil {
 		log.Panicln(err)
 	}

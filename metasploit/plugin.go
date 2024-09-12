@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 // Plugins
 
@@ -35,7 +35,7 @@ type PluginLoadedRes struct {
 	Plugins []string `msgpack:"plugins"`
 }
 
-func (msf *Metasploit) PluginLoad(PluginName string, PluginOptions map[string]string) (PluginLoadRes, error) {
+func (msf *Client) PluginLoad(PluginName string, PluginOptions map[string]string) (PluginLoadRes, error) {
 	ctx := &PluginLoadReq{
 		Method:     "plugin.load",
 		Token:      msf.token,
@@ -49,7 +49,7 @@ func (msf *Metasploit) PluginLoad(PluginName string, PluginOptions map[string]st
 	return res, nil
 }
 
-func (msf *Metasploit) PluginUnLoad(PluginName string) (PluginUnLoadRes, error) {
+func (msf *Client) PluginUnLoad(PluginName string) (PluginUnLoadRes, error) {
 	ctx := &PluginUnLoadReq{
 		Method:     "plugin.unload",
 		Token:      msf.token,
@@ -62,7 +62,7 @@ func (msf *Metasploit) PluginUnLoad(PluginName string) (PluginUnLoadRes, error) 
 	return res, nil
 }
 
-func (msf *Metasploit) PluginLoaded() (PluginLoadedRes, error) {
+func (msf *Client) PluginLoaded() (PluginLoadedRes, error) {
 	ctx := &PluginLoadedReq{
 		Method: "plugin.loaded",
 		Token:  msf.token,

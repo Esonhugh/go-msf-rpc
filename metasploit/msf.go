@@ -1,4 +1,4 @@
-package rpc
+package metasploit
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 	"gopkg.in/vmihailenco/msgpack.v2"
 )
 
-type Metasploit struct {
+type Client struct {
 	host     string
 	user     string
 	pass     string
@@ -22,10 +22,10 @@ type Metasploit struct {
 	logger   *logrus.Entry
 }
 
-func New(host, user, pass string) (*Metasploit, error) {
+func New(host, user, pass string) (*Client, error) {
 	defaultLogger := logrus.New()
 	defaultLogger.SetLevel(logrus.FatalLevel)
-	msf := &Metasploit{
+	msf := &Client{
 		host:     host,
 		user:     user,
 		pass:     pass,
@@ -39,26 +39,26 @@ func New(host, user, pass string) (*Metasploit, error) {
 	return msf, nil
 }
 
-func (msf *Metasploit) Token() string {
+func (msf *Client) Token() string {
 	return msf.token
 }
 
-func (msf *Metasploit) WithDebug(debug bool) *Metasploit {
+func (msf *Client) WithDebug(debug bool) *Client {
 	msf.Debug = debug
 	return msf
 }
 
-func (msf *Metasploit) WithInsecure(insecure bool) *Metasploit {
+func (msf *Client) WithInsecure(insecure bool) *Client {
 	msf.Insecure = insecure
 	return msf
 }
 
-func (msf *Metasploit) WithLogger(logger *logrus.Entry) *Metasploit {
+func (msf *Client) WithLogger(logger *logrus.Entry) *Client {
 	msf.logger = logger
 	return msf
 }
 
-func (msf *Metasploit) Send(req any, res any) error {
+func (msf *Client) Send(req any, res any) error {
 	if reflect.TypeOf(res).Kind() != reflect.Ptr {
 		return fmt.Errorf("res must be a pointer to recevie response")
 	}
@@ -68,7 +68,7 @@ func (msf *Metasploit) Send(req any, res any) error {
 	return msf.send(req, &res)
 }
 
-func (msf *Metasploit) send(req any, res any) error {
+func (msf *Client) send(req any, res any) error {
 	buf := new(bytes.Buffer)
 	msgpack.NewEncoder(buf).Encode(req)
 	if msf.Debug {
