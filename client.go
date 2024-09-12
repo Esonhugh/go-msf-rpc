@@ -5,6 +5,8 @@ import (
 	"log"
 	"os"
 	"time"
+
+	"github.com/esonhugh/go-msf-rpc/metasploit"
 )
 
 func checkErr(reason string, err error) bool {

@@ -1,4 +1,4 @@
-module github.com/fpr1m3/go-msf-rpc
+module github.com/esonhugh/go-msf-rpc
 
 go 1.16
 
