@@ -2,22 +2,22 @@ package rpc
 
 // Jobs
 
-type jobListReq struct {
+type JobListReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type jobListRes map[string]string
+type JobListRes map[string]string
 
-type jobInfoReq struct {
+type JobInfoReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 	JobId    string
 }
 
-type jobInfoRes struct {
+type JobInfoRes struct {
 	Jid       int                    `msgpack:"jid"`
 	Name      string                 `msgpack:"name"`
 	StartTime int                    `msgpack:"start_time"`
@@ -25,53 +25,53 @@ type jobInfoRes struct {
 	Datastore map[string]interface{} `msgpack:"datastore,omitempty"`
 }
 
-type jobStopReq struct {
+type JobStopReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 	JobId    string
 }
 
-type jobStopRes struct {
+type JobStopRes struct {
 	Result string `msgpack:"result"`
 }
 
 // Jobs
 
-func (msf *Metasploit) JobList() (jobListRes, error) {
-	ctx := &jobListReq{
+func (msf *Metasploit) JobList() (JobListRes, error) {
+	ctx := &JobListReq{
 		Method: "job.list",
 		Token:  msf.token,
 	}
-	var res jobListRes
+	var res JobListRes
 	if err := msf.send(ctx, &res); err != nil {
-		return jobListRes{}, err
+		return JobListRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) JobInfo(jobId string) (jobInfoRes, error) {
-	ctx := &jobInfoReq{
+func (msf *Metasploit) JobInfo(jobId string) (JobInfoRes, error) {
+	ctx := &JobInfoReq{
 		Method: "job.info",
 		Token:  msf.token,
 		JobId:  jobId,
 	}
-	var res jobInfoRes
+	var res JobInfoRes
 	if err := msf.send(ctx, &res); err != nil {
-		return jobInfoRes{}, err
+		return JobInfoRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) JobStop(jobId string) (jobStopRes, error) {
-	ctx := &jobStopReq{
+func (msf *Metasploit) JobStop(jobId string) (JobStopRes, error) {
+	ctx := &JobStopReq{
 		Method: "job.stop",
 		Token:  msf.token,
 		JobId:  jobId,
 	}
-	var res jobStopRes
+	var res JobStopRes
 	if err := msf.send(ctx, &res); err != nil {
-		return jobStopRes{}, err
+		return JobStopRes{}, err
 	}
 	return res, nil
 }

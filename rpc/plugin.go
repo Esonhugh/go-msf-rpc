@@ -2,7 +2,7 @@ package rpc
 
 // Plugins
 
-type pluginLoadReq struct {
+type PluginLoadReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -10,66 +10,66 @@ type pluginLoadReq struct {
 	Options    map[string]string
 }
 
-type pluginLoadRes struct {
+type PluginLoadRes struct {
 	Result string `msgpack:"result"`
 }
 
-type pluginUnLoadReq struct {
+type PluginUnLoadReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
 	PluginName string
 }
 
-type pluginUnLoadRes struct {
+type PluginUnLoadRes struct {
 	Result string `msgpack:"result"`
 }
 
-type pluginLoadedReq struct {
+type PluginLoadedReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type pluginLoadedRes struct {
+type PluginLoadedRes struct {
 	Plugins []string `msgpack:"plugins"`
 }
 
-func (msf *Metasploit) PluginLoad(pluginName string, pluginOptions map[string]string) (pluginLoadRes, error) {
-	ctx := &pluginLoadReq{
+func (msf *Metasploit) PluginLoad(PluginName string, PluginOptions map[string]string) (PluginLoadRes, error) {
+	ctx := &PluginLoadReq{
 		Method:     "plugin.load",
 		Token:      msf.token,
-		PluginName: pluginName,
-		Options:    pluginOptions,
+		PluginName: PluginName,
+		Options:    PluginOptions,
 	}
-	var res pluginLoadRes
+	var res PluginLoadRes
 	if err := msf.send(ctx, &res); err != nil {
-		return pluginLoadRes{}, err
+		return PluginLoadRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) PluginUnLoad(pluginName string) (pluginUnLoadRes, error) {
-	ctx := &pluginUnLoadReq{
+func (msf *Metasploit) PluginUnLoad(PluginName string) (PluginUnLoadRes, error) {
+	ctx := &PluginUnLoadReq{
 		Method:     "plugin.unload",
 		Token:      msf.token,
-		PluginName: pluginName,
+		PluginName: PluginName,
 	}
-	var res pluginUnLoadRes
+	var res PluginUnLoadRes
 	if err := msf.send(ctx, &res); err != nil {
-		return pluginUnLoadRes{}, err
+		return PluginUnLoadRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) PluginLoaded() (pluginLoadedRes, error) {
-	ctx := &pluginLoadedReq{
+func (msf *Metasploit) PluginLoaded() (PluginLoadedRes, error) {
+	ctx := &PluginLoadedReq{
 		Method: "plugin.loaded",
 		Token:  msf.token,
 	}
-	var res pluginLoadedRes
+	var res PluginLoadedRes
 	if err := msf.send(ctx, &res); err != nil {
-		return pluginLoadedRes{}, err
+		return PluginLoadedRes{}, err
 	}
 	return res, nil
 }

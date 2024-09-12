@@ -3,14 +3,14 @@ package rpc
 import "fmt"
 
 // Auth
-type loginReq struct {
+type LoginReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Username string
 	Password string
 }
 
-type loginRes struct {
+type LoginRes struct {
 	Result       string `msgpack:"result"`
 	Token        string `msgpack:"token"`
 	Error        bool   `msgpack:"error"`
@@ -18,25 +18,25 @@ type loginRes struct {
 	ErrorMessage string `msgpack:"error_message"`
 }
 
-type logoutReq struct {
+type LogoutReq struct {
 	_msgpack    struct{} `msgpack:",asArray"`
 	Method      string
 	Token       string
 	LogoutToken string
 }
 
-type logoutRes struct {
+type LogoutRes struct {
 	Result string `msgpack:"result"`
 }
 
 func (msf *Metasploit) Login() error {
-	ctx := &loginReq{
+	ctx := &LoginReq{
 		Method:   "auth.login",
 		Username: msf.user,
 		Password: msf.pass,
 	}
 
-	var res loginRes
+	var res LoginRes
 	if err := msf.send(ctx, &res); err != nil {
 		fmt.Println("Failed at login")
 		return err
@@ -46,13 +46,13 @@ func (msf *Metasploit) Login() error {
 }
 
 func (msf *Metasploit) Logout() error {
-	ctx := &logoutReq{
+	ctx := &LogoutReq{
 		Method:      "auth.logout",
 		Token:       msf.token,
 		LogoutToken: msf.token,
 	}
 
-	var res logoutRes
+	var res LogoutRes
 	if err := msf.send(ctx, &res); err != nil {
 		return err
 	}

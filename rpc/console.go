@@ -2,42 +2,42 @@ package rpc
 
 // Console
 
-type consoleCreateReq struct {
+type ConsoleCreateReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type consoleCreateRes struct {
+type ConsoleCreateRes struct {
 	Id     string `msgpack:"id"`
 	Prompt string `msgpack:"prompt"`
 	Busy   bool   `msgpack:"busy"`
 }
 
-type consoleDestroyReq struct {
+type ConsoleDestroyReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	ConsoleId string
 }
 
-type consoleDestroyRes struct {
+type ConsoleDestroyRes struct {
 	Result string `msgpack:"result"`
 }
 
-type consoleListReq struct {
+type ConsoleListReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type consoleListRes map[string][]struct {
+type ConsoleListRes map[string][]struct {
 	Id     string `msgpack:"id"`
 	Prompt string `msgpack:"prompt"`
 	Busy   bool   `msgpack:"busy"`
 }
 
-type consoleWriteReq struct {
+type ConsoleWriteReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -45,46 +45,46 @@ type consoleWriteReq struct {
 	Command   string
 }
 
-type consoleWriteRes struct {
+type ConsoleWriteRes struct {
 	Wrote uint32 `msgpack:"wrote"`
 }
 
-type consoleReadReq struct {
+type ConsoleReadReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	ConsoleId string
 }
 
-type consoleReadRes struct {
+type ConsoleReadRes struct {
 	Data   string `msgpack:"data"`
 	Prompt string `msgpack:"prompt"`
 	Busy   bool   `msgpack:"busy"`
 }
 
-type consoleSessionDetachReq struct {
+type ConsoleSessionDetachReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	ConsoleId string
 }
 
-type consoleSessionDetachRes struct {
+type ConsoleSessionDetachRes struct {
 	Result string `msgpack:"result"`
 }
 
-type consoleSessionKillReq struct {
+type ConsoleSessionKillReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	ConsoleId string
 }
 
-type consoleSessionKillRes struct {
+type ConsoleSessionKillRes struct {
 	Result string `msgpack:"result"`
 }
 
-type consoleTabsReq struct {
+type ConsoleTabsReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -92,112 +92,111 @@ type consoleTabsReq struct {
 	InputLine string
 }
 
-type consoleTabsRes struct {
+type ConsoleTabsRes struct {
 	Tabs []string `msgpack:"tabs"`
 }
 
 // Console
-
-func (msf *Metasploit) ConsoleCreate() (consoleCreateRes, error) {
-	ctx := &consoleCreateReq{
+func (msf *Metasploit) ConsoleCreate() (ConsoleCreateRes, error) {
+	ctx := &ConsoleCreateReq{
 		Method: "console.create",
 		Token:  msf.token,
 	}
-	var res consoleCreateRes
+	var res ConsoleCreateRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleCreateRes{}, err
+		return ConsoleCreateRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleDestroy(consoleid string) (consoleDestroyRes, error) {
-	ctx := &consoleDestroyReq{
+func (msf *Metasploit) ConsoleDestroy(consoleid string) (ConsoleDestroyRes, error) {
+	ctx := &ConsoleDestroyReq{
 		Method:    "console.destroy",
 		Token:     msf.token,
 		ConsoleId: consoleid,
 	}
-	var res consoleDestroyRes
+	var res ConsoleDestroyRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleDestroyRes{}, err
+		return ConsoleDestroyRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleList() (consoleListRes, error) {
-	ctx := &consoleListReq{
+func (msf *Metasploit) ConsoleList() (ConsoleListRes, error) {
+	ctx := &ConsoleListReq{
 		Method: "console.list",
 		Token:  msf.token,
 	}
-	var res consoleListRes
+	var res ConsoleListRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleListRes{}, err
+		return ConsoleListRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleWrite(consoleId, command string) (consoleWriteRes, error) {
-	ctx := &consoleWriteReq{
+func (msf *Metasploit) ConsoleWrite(consoleId, command string) (ConsoleWriteRes, error) {
+	ctx := &ConsoleWriteReq{
 		Method:    "console.write",
 		Token:     msf.token,
 		ConsoleId: consoleId,
 		Command:   command,
 	}
-	var res consoleWriteRes
+	var res ConsoleWriteRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleWriteRes{}, err
+		return ConsoleWriteRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleRead(consoleId string) (consoleReadRes, error) {
-	ctx := &consoleReadReq{
+func (msf *Metasploit) ConsoleRead(consoleId string) (ConsoleReadRes, error) {
+	ctx := &ConsoleReadReq{
 		Method:    "console.read",
 		Token:     msf.token,
 		ConsoleId: consoleId,
 	}
-	var res consoleReadRes
+	var res ConsoleReadRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleReadRes{}, err
+		return ConsoleReadRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleSessionDetch(consoleId string) (consoleSessionDetachRes, error) {
-	ctx := &consoleSessionDetachReq{
+func (msf *Metasploit) ConsoleSessionDetch(consoleId string) (ConsoleSessionDetachRes, error) {
+	ctx := &ConsoleSessionDetachReq{
 		Method:    "console.session_detach",
 		Token:     msf.token,
 		ConsoleId: consoleId,
 	}
-	var res consoleSessionDetachRes
+	var res ConsoleSessionDetachRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleSessionDetachRes{}, err
+		return ConsoleSessionDetachRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleSessionKill(consoleId string) (consoleSessionKillRes, error) {
-	ctx := &consoleSessionKillReq{
+func (msf *Metasploit) ConsoleSessionKill(consoleId string) (ConsoleSessionKillRes, error) {
+	ctx := &ConsoleSessionKillReq{
 		Method:    "console.session_kill",
 		Token:     msf.token,
 		ConsoleId: consoleId,
 	}
-	var res consoleSessionKillRes
+	var res ConsoleSessionKillRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleSessionKillRes{}, err
+		return ConsoleSessionKillRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ConsoleTabs(consoleId, inputLine string) (consoleTabsRes, error) {
-	ctx := &consoleTabsReq{
+func (msf *Metasploit) ConsoleTabs(consoleId, inputLine string) (ConsoleTabsRes, error) {
+	ctx := &ConsoleTabsReq{
 		Method:    "console.tabs",
 		Token:     msf.token,
 		ConsoleId: consoleId,
 		InputLine: inputLine,
 	}
-	var res consoleTabsRes
+	var res ConsoleTabsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return consoleTabsRes{}, err
+		return ConsoleTabsRes{}, err
 	}
 	return res, nil
 }

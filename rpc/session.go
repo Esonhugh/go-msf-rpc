@@ -3,7 +3,7 @@ package rpc
 import "fmt"
 
 // Session
-type sessionListReq struct {
+type SessionListReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
@@ -25,7 +25,7 @@ type SessionListRes map[uint32]struct {
 	ExploitUUID string `msgpack:"exploit_uuid"`
 }
 
-type sessionWriteReq struct {
+type SessionWriteReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -33,11 +33,11 @@ type sessionWriteReq struct {
 	Command   string
 }
 
-type sessionWriteRes struct {
+type SessionWriteRes struct {
 	WriteCount string `msgpack:"write_count"`
 }
 
-type sessionReadReq struct {
+type SessionReadReq struct {
 	_msgpack    struct{} `msgpack:",asArray"`
 	Method      string
 	Token       string
@@ -45,23 +45,23 @@ type sessionReadReq struct {
 	ReadPointer string
 }
 
-type sessionReadRes struct {
+type SessionReadRes struct {
 	Seq  uint32 `msgpack:"seq"`
 	Data string `msgpack:"data"`
 }
 
-type sessionRingLastReq struct {
+type SessionRingLastReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionRingLastRes struct {
+type SessionRingLastRes struct {
 	Seq uint32 `msgpack:"seq"`
 }
 
-type sessionMeterpreterWriteReq struct {
+type SessionMeterpreterWriteReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -69,22 +69,22 @@ type sessionMeterpreterWriteReq struct {
 	Command   string
 }
 
-type sessionMeterpreterWriteRes struct {
+type SessionMeterpreterWriteRes struct {
 	Result string `msgpack:"result"`
 }
 
-type sessionMeterpreterReadReq struct {
+type SessionMeterpreterReadReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionMeterpreterReadRes struct {
+type SessionMeterpreterReadRes struct {
 	Data string `msgpack:"data"`
 }
 
-type sessionMeterpreterRunSingleReq struct {
+type SessionMeterpreterRunSingleReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -92,27 +92,27 @@ type sessionMeterpreterRunSingleReq struct {
 	Command   string
 }
 
-type sessionMeterpreterRunSingleRes sessionMeterpreterWriteRes
+type SessionMeterpreterRunSingleRes SessionMeterpreterWriteRes
 
-type sessionMeterpreterDetachReq struct {
+type SessionMeterpreterDetachReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionMeterpreterDetachRes sessionMeterpreterWriteRes
+type SessionMeterpreterDetachRes SessionMeterpreterWriteRes
 
-type sessionMeterpreterKillReq struct {
+type SessionMeterpreterKillReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionMeterpreterKillRes sessionMeterpreterWriteRes
+type SessionMeterpreterKillRes SessionMeterpreterWriteRes
 
-type sessionMeterpreterTabsReq struct {
+type SessionMeterpreterTabsReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -120,22 +120,22 @@ type sessionMeterpreterTabsReq struct {
 	InputLine string
 }
 
-type sessionMeterpreterTabsRes struct {
+type SessionMeterpreterTabsRes struct {
 	Tabs []string `msgpack:"tabs"`
 }
 
-type sessionCompatibleModulesReq struct {
+type SessionCompatibleModulesReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionCompatibleModulesRes struct {
+type SessionCompatibleModulesRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type sessionShellUpgradeReq struct {
+type SessionShellUpgradeReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -144,18 +144,18 @@ type sessionShellUpgradeReq struct {
 	PortNumber uint32
 }
 
-type sessionShellUpgradeRes sessionMeterpreterWriteRes
+type SessionShellUpgradeRes SessionMeterpreterWriteRes
 
-type sessionRingClearReq struct {
+type SessionRingClearReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
 	SessionID uint32
 }
 
-type sessionRingClearRes sessionMeterpreterWriteRes
+type SessionRingClearRes SessionMeterpreterWriteRes
 
-type sessionRingPutReq struct {
+type SessionRingPutReq struct {
 	_msgpack  struct{} `msgpack:",asArray"`
 	Method    string
 	Token     string
@@ -163,12 +163,12 @@ type sessionRingPutReq struct {
 	Command   string
 }
 
-type sessionRingPutRes struct {
+type SessionRingPutRes struct {
 	WriteCount uint32 `msgpack:"write_count"`
 }
 
 func (msf *Metasploit) SessionList() (SessionListRes, error) {
-	req := &sessionListReq{
+	req := &SessionListReq{
 		Method: "session.list",
 		Token:  msf.token,
 	}
@@ -182,14 +182,14 @@ func (msf *Metasploit) SessionList() (SessionListRes, error) {
 
 }
 
-func (msf *Metasploit) SessionReadPointer(session uint32) (uint32, error) {
-	ctx := &sessionRingLastReq{
+func (msf *Metasploit) SessionReadPointer(Session uint32) (uint32, error) {
+	ctx := &SessionRingLastReq{
 		Method:    "session.ring_last",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var sesRingLast sessionRingLastRes
+	var sesRingLast SessionRingLastRes
 	if err := msf.send(ctx, &sesRingLast); err != nil {
 		return 0, err
 	}
@@ -197,15 +197,15 @@ func (msf *Metasploit) SessionReadPointer(session uint32) (uint32, error) {
 	return sesRingLast.Seq, nil
 }
 
-func (msf *Metasploit) SessionWrite(session uint32, command string) error {
-	ctx := &sessionWriteReq{
+func (msf *Metasploit) SessionWrite(Session uint32, command string) error {
+	ctx := &SessionWriteReq{
 		Method:    "session.shell_write",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 		Command:   command,
 	}
 
-	var res sessionWriteRes
+	var res SessionWriteRes
 	if err := msf.send(ctx, &res); err != nil {
 		return err
 	}
@@ -213,39 +213,39 @@ func (msf *Metasploit) SessionWrite(session uint32, command string) error {
 	return nil
 }
 
-func (msf *Metasploit) SessionRead(session uint32, readPointer uint32) (string, error) {
-	ctx := &sessionReadReq{
+func (msf *Metasploit) SessionRead(Session uint32, readPointer uint32) (string, error) {
+	ctx := &SessionReadReq{
 		Method:      "session.shell_read",
 		Token:       msf.token,
-		SessionID:   session,
+		SessionID:   Session,
 		ReadPointer: string(readPointer),
 	}
 
-	var res sessionReadRes
+	var res SessionReadRes
 	if err := msf.send(ctx, &res); err != nil {
 		return "", err
 	}
 
 	return res.Data, nil
 }
-func (msf *Metasploit) SessionExecute(session uint32, command string) (string, error) {
-	readPointer, err := msf.SessionReadPointer(session)
+func (msf *Metasploit) SessionExecute(Session uint32, command string) (string, error) {
+	readPointer, err := msf.SessionReadPointer(Session)
 	if err != nil {
 		return "", err
 	}
-	msf.SessionWrite(session, command)
-	data, err := msf.SessionRead(session, readPointer)
+	msf.SessionWrite(Session, command)
+	data, err := msf.SessionRead(Session, readPointer)
 	if err != nil {
 		return "", err
 	}
 	return data, nil
 }
 
-func (msf *Metasploit) SessionExecuteList(session uint32, commands []string) (string, error) {
+func (msf *Metasploit) SessionExecuteList(Session uint32, commands []string) (string, error) {
 	var results string
 	for _, command := range commands {
 		tCommand := fmt.Sprintf("%s\n", command)
-		result, err := msf.SessionExecute(session, tCommand)
+		result, err := msf.SessionExecute(Session, tCommand)
 		if err != nil {
 			return results, err
 		}
@@ -255,164 +255,164 @@ func (msf *Metasploit) SessionExecuteList(session uint32, commands []string) (st
 	return results, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterWrite(session uint32, command string) (sessionMeterpreterWriteRes, error) {
-	ctx := &sessionMeterpreterWriteReq{
+func (msf *Metasploit) SessionMeterpreterWrite(Session uint32, command string) (SessionMeterpreterWriteRes, error) {
+	ctx := &SessionMeterpreterWriteReq{
 		Method:    "session.meterpreter_write",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 		Command:   command,
 	}
 
-	var res sessionMeterpreterWriteRes
+	var res SessionMeterpreterWriteRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterWriteRes{}, err
+		return SessionMeterpreterWriteRes{}, err
 	}
 
 	return res, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterRead(session uint32) (sessionMeterpreterReadRes, error) {
-	ctx := &sessionMeterpreterReadReq{
+func (msf *Metasploit) SessionMeterpreterRead(Session uint32) (SessionMeterpreterReadRes, error) {
+	ctx := &SessionMeterpreterReadReq{
 		Method:    "session.meterpreter_read",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionMeterpreterReadRes
+	var res SessionMeterpreterReadRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterReadRes{}, err
+		return SessionMeterpreterReadRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterRunSingle(session uint32, command string) (sessionMeterpreterRunSingleRes, error) {
-	ctx := &sessionMeterpreterRunSingleReq{
+func (msf *Metasploit) SessionMeterpreterRunSingle(Session uint32, command string) (SessionMeterpreterRunSingleRes, error) {
+	ctx := &SessionMeterpreterRunSingleReq{
 		Method:    "session.meterpreter_run_single",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 		Command:   command,
 	}
 
-	var res sessionMeterpreterRunSingleRes
+	var res SessionMeterpreterRunSingleRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterRunSingleRes{}, err
+		return SessionMeterpreterRunSingleRes{}, err
 	}
 
 	return res, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterSessionDetach(session uint32) (sessionMeterpreterDetachRes, error) {
-	ctx := &sessionMeterpreterDetachReq{
-		Method:    "session.meterpreter_session_detach",
+func (msf *Metasploit) SessionMeterpreterSessionDetach(Session uint32) (SessionMeterpreterDetachRes, error) {
+	ctx := &SessionMeterpreterDetachReq{
+		Method:    "session.meterpreter_Session_detach",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionMeterpreterDetachRes
+	var res SessionMeterpreterDetachRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterDetachRes{}, err
+		return SessionMeterpreterDetachRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterSessionKill(session uint32) (sessionMeterpreterKillRes, error) {
-	ctx := &sessionMeterpreterKillReq{
-		Method:    "session.meterpreter_session_kill",
+func (msf *Metasploit) SessionMeterpreterSessionKill(Session uint32) (SessionMeterpreterKillRes, error) {
+	ctx := &SessionMeterpreterKillReq{
+		Method:    "session.meterpreter_Session_kill",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionMeterpreterKillRes
+	var res SessionMeterpreterKillRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterKillRes{}, err
+		return SessionMeterpreterKillRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionMeterpreterTabs(session uint32, inputLine string) (sessionMeterpreterTabsRes, error) {
-	ctx := &sessionMeterpreterTabsReq{
+func (msf *Metasploit) SessionMeterpreterTabs(Session uint32, inputLine string) (SessionMeterpreterTabsRes, error) {
+	ctx := &SessionMeterpreterTabsReq{
 		Method:    "session.meterpreter_tabs",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 		InputLine: inputLine,
 	}
 
-	var res sessionMeterpreterTabsRes
+	var res SessionMeterpreterTabsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionMeterpreterTabsRes{}, err
+		return SessionMeterpreterTabsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionCompatibleModules(session uint32) (sessionCompatibleModulesRes, error) {
-	ctx := &sessionCompatibleModulesReq{
+func (msf *Metasploit) SessionCompatibleModules(Session uint32) (SessionCompatibleModulesRes, error) {
+	ctx := &SessionCompatibleModulesReq{
 		Method:    "session.compatible_modules",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionCompatibleModulesRes
+	var res SessionCompatibleModulesRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionCompatibleModulesRes{}, err
+		return SessionCompatibleModulesRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionShellUpgrade(session uint32, lhostAddress string, lportNumber uint32) (sessionShellUpgradeRes, error) {
-	ctx := &sessionShellUpgradeReq{
+func (msf *Metasploit) SessionShellUpgrade(Session uint32, lhostAddress string, lportNumber uint32) (SessionShellUpgradeRes, error) {
+	ctx := &SessionShellUpgradeReq{
 		Method:     "session.shell_upgrade",
 		Token:      msf.token,
-		SessionID:  session,
+		SessionID:  Session,
 		IpAddress:  lhostAddress,
 		PortNumber: lportNumber,
 	}
 
-	var res sessionShellUpgradeRes
+	var res SessionShellUpgradeRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionShellUpgradeRes{}, err
+		return SessionShellUpgradeRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionRingClear(session uint32) (sessionRingClearRes, error) {
-	ctx := &sessionRingClearReq{
+func (msf *Metasploit) SessionRingClear(Session uint32) (SessionRingClearRes, error) {
+	ctx := &SessionRingClearReq{
 		Method:    "session.ring_clear",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionRingClearRes
+	var res SessionRingClearRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionRingClearRes{}, err
+		return SessionRingClearRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionRingLast(session uint32) (sessionRingLastRes, error) {
-	ctx := &sessionRingLastReq{
+func (msf *Metasploit) SessionRingLast(Session uint32) (SessionRingLastRes, error) {
+	ctx := &SessionRingLastReq{
 		Method:    "session.ring_last",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 	}
 
-	var res sessionRingLastRes
+	var res SessionRingLastRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionRingLastRes{}, err
+		return SessionRingLastRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) SessionRingPut(session uint32, command string) (sessionRingPutRes, error) {
-	ctx := &sessionRingPutReq{
+func (msf *Metasploit) SessionRingPut(Session uint32, command string) (SessionRingPutRes, error) {
+	ctx := &SessionRingPutReq{
 		Method:    "session.ring_put",
 		Token:     msf.token,
-		SessionID: session,
+		SessionID: Session,
 		Command:   command,
 	}
 
-	var res sessionRingPutRes
+	var res SessionRingPutRes
 	if err := msf.send(ctx, &res); err != nil {
-		return sessionRingPutRes{}, err
+		return SessionRingPutRes{}, err
 	}
 	return res, nil
 }

@@ -2,67 +2,67 @@ package rpc
 
 // Modules
 
-type moduleExploitsReq struct {
+type ModuleExploitsReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type moduleExploitsRes struct {
+type ModuleExploitsRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type moduleAuxiliaryReq struct {
+type ModuleAuxiliaryReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type moduleAuxiliaryRes struct {
+type ModuleAuxiliaryRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type modulePostReq struct {
+type ModulePostReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type modulePostRes struct {
+type ModulePostRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type modulePayloadsReq struct {
+type ModulePayloadsReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type modulePayloadsRes struct {
+type ModulePayloadsRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type moduleEncodersReq struct {
+type ModuleEncodersReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type moduleEncodersRes struct {
+type ModuleEncodersRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type moduleNopsReq struct {
+type ModuleNopsReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type moduleNopsRes struct {
+type ModuleNopsRes struct {
 	Modules []string `msgpack:"modules"`
 }
 
-type moduleInfoReq struct {
+type ModuleInfoReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -70,7 +70,7 @@ type moduleInfoReq struct {
 	ModuleName string
 }
 
-type moduleInfoRes struct {
+type ModuleInfoRes struct {
 	Name        string     `msgpack:"name"`
 	Description string     `msgpack:"description"`
 	License     string     `msgpack:"license"`
@@ -81,7 +81,7 @@ type moduleInfoRes struct {
 	Authors     []string   `msgpack:"authors"`
 }
 
-type moduleOptionsReq struct {
+type ModuleOptionsReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -89,7 +89,7 @@ type moduleOptionsReq struct {
 	ModuleName string
 }
 
-type moduleOptionsRes map[string]struct {
+type ModuleOptionsRes map[string]struct {
 	Type     string      `msgpack:"type"`
 	Required bool        `msgpack:"required"`
 	Advanced bool        `msgpack:"advanced"`
@@ -99,18 +99,18 @@ type moduleOptionsRes map[string]struct {
 	Enums    []string    `msgpack:"enums,omitempty"`
 }
 
-type moduleCompatiblePayloadsReq struct {
+type ModuleCompatiblePayloadsReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
 	ModuleName string
 }
 
-type moduleCompatiblePayloadsRes struct {
+type ModuleCompatiblePayloadsRes struct {
 	Payloads []string `msgpack:"payloads"`
 }
 
-type moduleTargetCompatiblePayloadsReq struct {
+type ModuleTargetCompatiblePayloadsReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -118,22 +118,22 @@ type moduleTargetCompatiblePayloadsReq struct {
 	ArchNumber uint32
 }
 
-type moduleTargetCompatiblePayloadsRes struct {
+type ModuleTargetCompatiblePayloadsRes struct {
 	Payloads []string `msgpack:"payloads"`
 }
 
-type moduleCompatibleSessionsReq struct {
+type ModuleCompatibleSessionsReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
 	ModuleName string
 }
 
-type moduleCompatibleSessionsRes struct {
+type ModuleCompatibleSessionsRes struct {
 	Sessions []string `msgpack:"sessions"`
 }
 
-type moduleEncodeReq struct {
+type ModuleEncodeReq struct {
 	_msgpack      struct{} `msgpack:",asArray"`
 	Method        string
 	Token         string
@@ -142,11 +142,11 @@ type moduleEncodeReq struct {
 	Options       map[string]string
 }
 
-type moduleEncodeRes struct {
+type ModuleEncodeRes struct {
 	Encoded []byte `msgpack:"encoded"`
 }
 
-type moduleExecuteReq struct {
+type ModuleExecuteReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
@@ -155,184 +155,184 @@ type moduleExecuteReq struct {
 	Options    map[string]string
 }
 
-type moduleExecuteRes struct {
+type ModuleExecuteRes struct {
 	JobId uint32 `msgpack:"job_id"`
 }
 
-func (msf *Metasploit) ModuleExploits() (moduleExploitsRes, error) {
-	ctx := &moduleExploitsReq{
+func (msf *Metasploit) ModuleExploits() (ModuleExploitsRes, error) {
+	ctx := &ModuleExploitsReq{
 		Method: "module.exploits",
 		Token:  msf.token,
 	}
-	var res moduleExploitsRes
+	var res ModuleExploitsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleExploitsRes{}, err
+		return ModuleExploitsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleAuxiliary() (moduleAuxiliaryRes, error) {
-	ctx := &moduleAuxiliaryReq{
+func (msf *Metasploit) ModuleAuxiliary() (ModuleAuxiliaryRes, error) {
+	ctx := &ModuleAuxiliaryReq{
 		Method: "module.auxiliary",
 		Token:  msf.token,
 	}
-	var res moduleAuxiliaryRes
+	var res ModuleAuxiliaryRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleAuxiliaryRes{}, err
+		return ModuleAuxiliaryRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModulePost() (modulePostRes, error) {
-	ctx := &modulePostReq{
+func (msf *Metasploit) ModulePost() (ModulePostRes, error) {
+	ctx := &ModulePostReq{
 		Method: "module.post",
 		Token:  msf.token,
 	}
-	var res modulePostRes
+	var res ModulePostRes
 	if err := msf.send(ctx, &res); err != nil {
-		return modulePostRes{}, err
+		return ModulePostRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModulePayloads() (modulePayloadsRes, error) {
-	ctx := &modulePayloadsReq{
+func (msf *Metasploit) ModulePayloads() (ModulePayloadsRes, error) {
+	ctx := &ModulePayloadsReq{
 		Method: "module.payloads",
 		Token:  msf.token,
 	}
-	var res modulePayloadsRes
+	var res ModulePayloadsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return modulePayloadsRes{}, err
+		return ModulePayloadsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleEncoders() (moduleEncodersRes, error) {
-	ctx := &moduleEncodersReq{
+func (msf *Metasploit) ModuleEncoders() (ModuleEncodersRes, error) {
+	ctx := &ModuleEncodersReq{
 		Method: "module.encoders",
 		Token:  msf.token,
 	}
-	var res moduleEncodersRes
+	var res ModuleEncodersRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleEncodersRes{}, err
+		return ModuleEncodersRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleNops() (moduleNopsRes, error) {
-	ctx := &moduleNopsReq{
+func (msf *Metasploit) ModuleNops() (ModuleNopsRes, error) {
+	ctx := &ModuleNopsReq{
 		Method: "module.nops",
 		Token:  msf.token,
 	}
-	var res moduleNopsRes
+	var res ModuleNopsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleNopsRes{}, err
+		return ModuleNopsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleInfo(moduleType, moduleName string) (moduleInfoRes, error) {
-	ctx := &moduleInfoReq{
+func (msf *Metasploit) ModuleInfo(ModuleType, ModuleName string) (ModuleInfoRes, error) {
+	ctx := &ModuleInfoReq{
 		Method:     "module.info",
 		Token:      msf.token,
-		ModuleType: moduleType,
-		ModuleName: moduleName,
+		ModuleType: ModuleType,
+		ModuleName: ModuleName,
 	}
-	var res moduleInfoRes
+	var res ModuleInfoRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleInfoRes{}, err
+		return ModuleInfoRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleOptions(moduleType, moduleName string) (moduleOptionsRes, error) {
-	ctx := &moduleOptionsReq{
+func (msf *Metasploit) ModuleOptions(ModuleType, ModuleName string) (ModuleOptionsRes, error) {
+	ctx := &ModuleOptionsReq{
 		Method:     "module.options",
 		Token:      msf.token,
-		ModuleType: moduleType,
-		ModuleName: moduleName,
+		ModuleType: ModuleType,
+		ModuleName: ModuleName,
 	}
-	var res moduleOptionsRes
+	var res ModuleOptionsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleOptionsRes{}, err
+		return ModuleOptionsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleCompatiblePayloads(moduleName string) (moduleCompatiblePayloadsRes, error) {
-	ctx := &moduleCompatiblePayloadsReq{
+func (msf *Metasploit) ModuleCompatiblePayloads(ModuleName string) (ModuleCompatiblePayloadsRes, error) {
+	ctx := &ModuleCompatiblePayloadsReq{
 		Method:     "module.compatible_payloads",
 		Token:      msf.token,
-		ModuleName: moduleName,
+		ModuleName: ModuleName,
 	}
-	var res moduleCompatiblePayloadsRes
+	var res ModuleCompatiblePayloadsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleCompatiblePayloadsRes{}, err
+		return ModuleCompatiblePayloadsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleTargetCompatiblePayloads(moduleName string, targetNumber uint32) (moduleTargetCompatiblePayloadsRes, error) {
-	ctx := &moduleTargetCompatiblePayloadsReq{
+func (msf *Metasploit) ModuleTargetCompatiblePayloads(ModuleName string, targetNumber uint32) (ModuleTargetCompatiblePayloadsRes, error) {
+	ctx := &ModuleTargetCompatiblePayloadsReq{
 		Method:     "module.target_compatible_payloads",
 		Token:      msf.token,
-		ModuleName: moduleName,
+		ModuleName: ModuleName,
 		ArchNumber: targetNumber,
 	}
-	var res moduleTargetCompatiblePayloadsRes
+	var res ModuleTargetCompatiblePayloadsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleTargetCompatiblePayloadsRes{}, err
+		return ModuleTargetCompatiblePayloadsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleCompatibleSessions(moduleName string) (moduleCompatibleSessionsRes, error) {
-	ctx := &moduleCompatibleSessionsReq{
+func (msf *Metasploit) ModuleCompatibleSessions(ModuleName string) (ModuleCompatibleSessionsRes, error) {
+	ctx := &ModuleCompatibleSessionsReq{
 		Method:     "module.compatible_sessions",
 		Token:      msf.token,
-		ModuleName: moduleName,
+		ModuleName: ModuleName,
 	}
-	var res moduleCompatibleSessionsRes
+	var res ModuleCompatibleSessionsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleCompatibleSessionsRes{}, err
+		return ModuleCompatibleSessionsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleEncode(data, encoderModule string, moduleOptions map[string]string) (moduleEncodeRes, error) {
-	ctx := &moduleEncodeReq{
+func (msf *Metasploit) ModuleEncode(data, encoderModule string, ModuleOptions map[string]string) (ModuleEncodeRes, error) {
+	ctx := &ModuleEncodeReq{
 		Method:        "module.encode",
 		Token:         msf.token,
 		Data:          data,
 		EncoderModule: encoderModule,
-		Options:       moduleOptions,
+		Options:       ModuleOptions,
 	}
-	var res moduleEncodeRes
+	var res ModuleEncodeRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleEncodeRes{}, err
+		return ModuleEncodeRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) ModuleExecute(moduleType, moduleName string, moduleOptions map[string]string) (moduleExecuteRes, error) {
-	ctx := &moduleExecuteReq{
+func (msf *Metasploit) ModuleExecute(ModuleType, ModuleName string, ModuleOptions map[string]string) (ModuleExecuteRes, error) {
+	ctx := &ModuleExecuteReq{
 		Method:     "module.execute",
 		Token:      msf.token,
-		ModuleType: moduleType,
-		ModuleName: moduleName,
-		Options:    moduleOptions,
+		ModuleType: ModuleType,
+		ModuleName: ModuleName,
+		Options:    ModuleOptions,
 	}
-	var res moduleExecuteRes
+	var res ModuleExecuteRes
 	if err := msf.send(ctx, &res); err != nil {
-		return moduleExecuteRes{}, err
+		return ModuleExecuteRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) GetModuleRequires(moduleType, moduleName string) ([]string, error) {
+func (msf *Metasploit) GetModuleRequires(ModuleType, ModuleName string) ([]string, error) {
 	var returnValues []string
 
-	options, err := msf.ModuleOptions(moduleType, moduleName)
+	options, err := msf.ModuleOptions(ModuleType, ModuleName)
 
 	if err != nil {
 		return nil, err

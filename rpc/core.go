@@ -1,14 +1,14 @@
 package rpc
 
 // Core
-type coreAddModulePathReq struct {
+type CoreAddModulePathReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 	Path     string
 }
 
-type coreAddModulePathRes struct {
+type CoreAddModulePathRes struct {
 	Exploits  uint32 `msgpack:"exploits"`
 	Auxiliary uint32 `msgpack:"auxiliary"`
 	Post      uint32 `msgpack:"post"`
@@ -17,13 +17,13 @@ type coreAddModulePathRes struct {
 	Payloads  uint32 `msgpack:"payloads"`
 }
 
-type coreModuleStatsReq struct {
+type CoreModuleStatsReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreModuleStatsRes struct {
+type CoreModuleStatsRes struct {
 	Exploits  uint32 `msgpack:"exploits"`
 	Auxiliary uint32 `msgpack:"auxiliary"`
 	Post      uint32 `msgpack:"post"`
@@ -32,13 +32,13 @@ type coreModuleStatsRes struct {
 	Payloads  uint32 `msgpack:"payloads"`
 }
 
-type coreReloadModulesReq struct {
+type CoreReloadModulesReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreReloadModulesRes struct {
+type CoreReloadModulesRes struct {
 	Exploits  uint32 `msgpack:"exploits"`
 	Auxiliary uint32 `msgpack:"auxiliary"`
 	Post      uint32 `msgpack:"post"`
@@ -47,17 +47,17 @@ type coreReloadModulesRes struct {
 	Payloads  uint32 `msgpack:"payloads"`
 }
 
-type coreSaveReq struct {
+type CoreSaveReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreSaveRes struct {
+type CoreSaveRes struct {
 	Result string `msgpack:"result"`
 }
 
-type coreSetgReq struct {
+type CoreSetgReq struct {
 	_msgpack    struct{} `msgpack:",asArray"`
 	Method      string
 	Token       string
@@ -65,196 +65,196 @@ type coreSetgReq struct {
 	OptionValue string
 }
 
-type coreSetgRes struct {
+type CoreSetgRes struct {
 	Result string `msgpack:"result"`
 }
 
-type coreUnSetgReq struct {
+type CoreUnSetgReq struct {
 	_msgpack   struct{} `msgpack:",asArray"`
 	Method     string
 	Token      string
 	OptionName string
 }
 
-type coreUnSetgRes struct {
+type CoreUnSetgRes struct {
 	Result string `msgpack:"result"`
 }
 
-type coreThreadListReq struct {
+type CoreThreadListReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreThreadListRes map[int]struct {
+type CoreThreadListRes map[int]struct {
 	Status   string `msgpack:"status"`
 	Critical bool   `msgpack:"critical"`
 	Name     string `msgpack:"name"`
 	Started  string `msgpack:"started"`
 }
 
-type coreThreadKillReq struct {
+type CoreThreadKillReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 	ThreadId string
 }
 
-type coreThreadKillRes struct {
+type CoreThreadKillRes struct {
 	Result string `msgpack:"result"`
 }
 
-type coreVersionReq struct {
+type CoreVersionReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreVersionRes struct {
+type CoreVersionRes struct {
 	Version string `msgpack:"version"`
 	Ruby    string `msgpack:"ruby"`
 	Api     string `msgpack:"api"`
 }
 
-type coreStopReq struct {
+type CoreStopReq struct {
 	_msgpack struct{} `msgpack:",asArray"`
 	Method   string
 	Token    string
 }
 
-type coreStopRes struct {
+type CoreStopRes struct {
 	Result string `msgpack:"result"`
 }
 
-func (msf *Metasploit) CoreAddModulePath(path string) (coreAddModulePathRes, error) {
-	ctx := &coreAddModulePathReq{
+func (msf *Metasploit) CoreAddModulePath(path string) (CoreAddModulePathRes, error) {
+	ctx := &CoreAddModulePathReq{
 		Method: "core.add_module_path",
 		Token:  msf.token,
 		Path:   path,
 	}
 
-	var res coreAddModulePathRes
+	var res CoreAddModulePathRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreAddModulePathRes{}, err
+		return CoreAddModulePathRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreModuleStats() (coreModuleStatsRes, error) {
-	ctx := &coreModuleStatsReq{
+func (msf *Metasploit) CoreModuleStats() (CoreModuleStatsRes, error) {
+	ctx := &CoreModuleStatsReq{
 		Method: "core.module_stats",
 		Token:  msf.token,
 	}
 
-	var res coreModuleStatsRes
+	var res CoreModuleStatsRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreModuleStatsRes{}, err
+		return CoreModuleStatsRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreReloadModules() (coreReloadModulesRes, error) {
-	ctx := &coreReloadModulesReq{
+func (msf *Metasploit) CoreReloadModules() (CoreReloadModulesRes, error) {
+	ctx := &CoreReloadModulesReq{
 		Method: "core.reload_modules",
 		Token:  msf.token,
 	}
 
-	var res coreReloadModulesRes
+	var res CoreReloadModulesRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreReloadModulesRes{}, err
+		return CoreReloadModulesRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreSave() (coreSaveRes, error) {
-	ctx := &coreSaveReq{
+func (msf *Metasploit) CoreSave() (CoreSaveRes, error) {
+	ctx := &CoreSaveReq{
 		Method: "core.save",
 		Token:  msf.token,
 	}
 
-	var res coreSaveRes
+	var res CoreSaveRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreSaveRes{}, nil
+		return CoreSaveRes{}, nil
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreSetg(optionName, optionValue string) (coreSetgRes, error) {
-	ctx := &coreSetgReq{
+func (msf *Metasploit) CoreSetg(optionName, optionValue string) (CoreSetgRes, error) {
+	ctx := &CoreSetgReq{
 		Method:      "core.setg",
 		Token:       msf.token,
 		OptionName:  optionName,
 		OptionValue: optionValue,
 	}
 
-	var res coreSetgRes
+	var res CoreSetgRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreSetgRes{}, nil
+		return CoreSetgRes{}, nil
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreUnSetg(optionName string) (coreUnSetgRes, error) {
-	ctx := &coreUnSetgReq{
+func (msf *Metasploit) CoreUnSetg(optionName string) (CoreUnSetgRes, error) {
+	ctx := &CoreUnSetgReq{
 		Method:     "core.unsetg",
 		Token:      msf.token,
 		OptionName: optionName,
 	}
 
-	var res coreUnSetgRes
+	var res CoreUnSetgRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreUnSetgRes{}, nil
+		return CoreUnSetgRes{}, nil
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreThreadList() (coreThreadListRes, error) {
-	ctx := &coreThreadListReq{
+func (msf *Metasploit) CoreThreadList() (CoreThreadListRes, error) {
+	ctx := &CoreThreadListReq{
 		Method: "core.thread_list",
 		Token:  msf.token,
 	}
 
-	var res coreThreadListRes
+	var res CoreThreadListRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreThreadListRes{}, nil
+		return CoreThreadListRes{}, nil
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreThreadKill(threadId string) (coreThreadKillRes, error) {
-	ctx := &coreThreadKillReq{
+func (msf *Metasploit) CoreThreadKill(threadId string) (CoreThreadKillRes, error) {
+	ctx := &CoreThreadKillReq{
 		Method:   "core.thread_kill",
 		Token:    msf.token,
 		ThreadId: threadId,
 	}
 
-	var res coreThreadKillRes
+	var res CoreThreadKillRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreThreadKillRes{}, nil
+		return CoreThreadKillRes{}, nil
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreVersion() (coreVersionRes, error) {
-	ctx := &coreVersionReq{
+func (msf *Metasploit) CoreVersion() (CoreVersionRes, error) {
+	ctx := &CoreVersionReq{
 		Method: "core.version",
 		Token:  msf.token,
 	}
-	var res coreVersionRes
+	var res CoreVersionRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreVersionRes{}, err
+		return CoreVersionRes{}, err
 	}
 	return res, nil
 }
 
-func (msf *Metasploit) CoreStop() (coreStopRes, error) {
-	ctx := &coreStopReq{
+func (msf *Metasploit) CoreStop() (CoreStopRes, error) {
+	ctx := &CoreStopReq{
 		Method: "core.stop",
 		Token:  msf.token,
 	}
-	var res coreStopRes
+	var res CoreStopRes
 	if err := msf.send(ctx, &res); err != nil {
-		return coreStopRes{}, err
+		return CoreStopRes{}, err
 	}
 	return res, nil
 }
